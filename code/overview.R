@@ -8,19 +8,22 @@ library(ggridges)
 setwd("~/03_Outreach/dataviz/konstanz")
 
 full_data = read.csv("data/processed/data_renamed.csv") %>%
-  select(-X)
+  select(-X) %>%
+  mutate(Q2.1 = replace(Q2.1, Q2.1 == 3, 1),
+         Q2.1 = replace(Q2.1, is.na(Q2.1), 4))
 
 #utils
 dark_blue = "#334152"
 soft_blue = "#d9e5ec"
 teal = "#009b91"
 
+values_gender = c("weiblich" = dark_blue, "männlich" = teal,  "keine Angabe" = soft_blue)
 lookup_names = read.csv("data/processed/names_sauber.csv", header = TRUE) %>%
   mutate(long_to_short = paste0("\"", lang, "\"", " = ", "\"", kurz, "\""),
          short_to_long = paste0("\"", kurz, "\"", " = ", "\"", lang, "\""))
 
-codes_gender = data.frame(code = c(1, 2, 3, 4),
-                          gender = c("weiblich", "männlich", "divers", "keine Angabe"))
+codes_gender = data.frame(code = c(1, 2, 4),
+                          gender = c("weiblich", "männlich", "keine Angabe"))
 
 codes_faculty = data.frame(code = c(1, 2, 3, 4, 5, 6, 7),
                           faculty = c("Architektur und Gestaltung", "Bauingenieurwesen", "Elektrotechnik und Informationstechnik", 
@@ -34,7 +37,7 @@ df_gender = full_data %>%
   select(Q2.1) %>%
   filter(!is.na(Q2.1)) %>%
   melt(variable.name = "1") %>%
-  mutate(gender = codes_gender$gender[match(value, codes_gender$code)])
+  mutate(gender = codes_gender$gender[match(value, codes_gender$code)]) 
 
 df_gender$gender = factor(df_gender$gender,
                           levels = codes_gender$gender)
@@ -50,7 +53,7 @@ df = df %>%
 (p1 = ggplot(data = df, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=gender)) + theme_void() +
   scale_y_continuous(name = "") +
   scale_x_continuous(limits = c(1.5, 4)) +
-  scale_fill_manual(values = c("weiblich" = dark_blue, "männlich" = soft_blue, "divers" = teal, "keine Angabe" = "grey50"),
+  scale_fill_manual(values = values_gender,
                     name = "") +
   coord_polar(theta = "y") +
   geom_rect( color = "grey50", linewidth = .05) +
@@ -88,7 +91,7 @@ df_faculty = full_data %>%
   rename("m" = "männlich",
          "kA" = "keine Angabe") %>%
   mutate(share_female = weiblich/total_female,
-         share_other = (m + kA + divers)/total_other) %>%
+         share_other = (m + kA)/total_other) %>%
   mutate(across(.cols = everything(), ~ ifelse(is.infinite(.x), 0, .x))) %>%
   rename("männlich" = "m",
          "keine Angabe" = "kA") %>%
@@ -112,8 +115,8 @@ df_faculty$share = factor(df_faculty$share, level = rev(c("share_female", "share
   coord_flip() +
   geom_hline(yintercept = 0) +
   scale_y_continuous(expand = c(0,0), breaks = c(200, 400), limits = c(-300, 500)) +
-  scale_fill_manual(values = c("weiblich" = dark_blue, "männlich" = soft_blue, "divers" = teal, "keine Angabe" = "grey50", 
-                               "share_female" = dark_blue, "share_other" = soft_blue),
+  scale_fill_manual(values = c("weiblich" = dark_blue, "männlich" = teal,  "keine Angabe" = soft_blue, 
+                               "share_female" = dark_blue, "share_other" = teal),
                     name = "") +
   theme(axis.text.x = element_text(color = "grey20"),
         axis.line.x = element_line(),
@@ -148,7 +151,7 @@ ggplot() + theme_void() +
   theme(legend.position = "None",
         axis.text = element_text(color = "grey20"),
         axis.line = element_line()) +
-  scale_fill_manual(values = c("weiblich" = dark_blue, "männlich" = soft_blue, "divers" = teal, "keine Angabe" = "grey50"), name = "")
+  scale_fill_manual(values = values_gender, name = "")
   
 ggsave("reports/figures/wasistpassiert.png", dpi = 700)
 
@@ -178,7 +181,7 @@ ggplot() + theme_void() +
   theme(legend.position = "None",
         axis.text = element_text(color = "grey20"),
         axis.line = element_line()) +
-  scale_fill_manual(values = c("weiblich" = dark_blue, "männlich" = soft_blue, "divers" = teal, "keine Angabe" = "grey50"), name = "")
+  scale_fill_manual(values = values_gender, name = "")
 
 ggsave("reports/figures/zeugen.png", dpi = 700)
 
@@ -214,7 +217,7 @@ df_incident_join = df_incident %>%
             hjust = .5, nudge_x = -0.45, check_overlap = TRUE) +
   coord_flip() +
   scale_y_continuous(expand = c(0,0), limits = c(-155, 155), breaks = c(0, 100, 150)) +
-  scale_fill_manual(values = c("weiblich" = dark_blue, "männlich" = soft_blue, "divers" = teal, "keine Angabe" = "grey50"),
+  scale_fill_manual(values = values_gender,
                     name = "") +
   theme(axis.text.x = element_text(color = "grey20"),
         axis.line.x = element_line(color = "grey20"),
@@ -244,11 +247,81 @@ ggplot() + theme_void() +
   scale_x_reverse() +
   geom_point(data = df_groups, position = position_jitter(),
              aes(x = q3, y = q4, fill = gender), color = "grey20", shape = 21, stroke = .2, size = 3.5, alpha = .9) +
-  scale_fill_manual(values = c("weiblich" = dark_blue, "männlich" = soft_blue, "divers" = teal, "keine Angabe" = "grey50"),
+  scale_fill_manual(values = values_gender,
                     name = "") 
 
 ggsave("reports/figures/q3vsq4.png", dpi = 700, width = 7, height = 6)
 
+#handelnde person gender
+
+fem = c("Q3.3A1",  "Q3.7A1", "Q3.11A1", "Q3.15A1", "Q3.19A1", "Q3.23A1", "Q3.27A1", "Q3.31A1", "Q3.35A1", "Q3.39A1", "Q3.43A1", "Q3.47A1", "Q3.51A1","Q3.55A1", "Q3.59A1",
+        "Q3.3A3","Q3.7A3", "Q3.11A3", "Q3.15A3", "Q3.19A3", "Q3.23A3", "Q3.27A3", "Q3.31A3", "Q3.35A3", "Q3.39A3", "Q3.43A3", "Q3.47A3", "Q3.51A3","Q3.55A3", "Q3.59A3")
+male = c("Q3.3A2",  "Q3.7A2", "Q3.11A2", "Q3.15A2", "Q3.19A2", "Q3.23A2", "Q3.27A2", "Q3.31A2", "Q3.35A2", "Q3.39A2", "Q3.43A2", "Q3.47A2", "Q3.51A2","Q3.55A2", "Q3.59A2")
+other = c("Q3.3A4",  "Q3.7A4", "Q3.11A4", "Q3.15A4", "Q3.19A4", "Q3.23A4", "Q3.27A4", "Q3.31A4", "Q3.35A4", "Q3.39A4", "Q3.43A4", "Q3.47A4", "Q3.51A4","Q3.55A4", "Q3.59A4")
+
+
+df_offender = full_data %>%
+  select(Q2.1, fem, male, other) %>%
+  group_by(Q2.1) %>%
+  summarize(across(everything(), ~ sum(.x, na.rm = TRUE))) %>%
+  filter(!is.na(Q2.1)) %>%
+  mutate("weiblich" = rowSums(across(fem)),
+         "männlich" = rowSums(across(male)),
+         "keine Angabe" = rowSums(across(other)),
+         "gender_1" = codes_gender$gender[match(Q2.1, codes_gender$code)]) %>%
+  select("gender_1", "weiblich", "männlich", "keine Angabe") %>%
+  melt(id.vars = "gender_1")
+
+df_offender$variable = factor(df_offender$variable, levels = c("weiblich", "männlich", "keine Angabe"))
+df_offender$gender_1 = factor(df_offender$gender_1, levels = codes_gender$gender)
+
+p1 = ggplot() + theme_void() +
+  geom_bar(data = df_offender[df_offender$gender_1 %in% c("weiblich", "männlich"),], aes(x = gender_1, y = value, fill = variable), stat = "identity", position = "fill") +
+  scale_fill_manual(values = values_gender,
+                    name = "Handelnde Person") +
+  scale_y_continuous(breaks = c(0, 0.5, 1), labels = c("0 %", "50 %", "100 %")) +
+  scale_x_discrete(name = "Betroffene Person") +
+  theme(axis.text = element_text(), axis.title.x = element_text())
+
+p2 = ggplot() + theme_void() +
+  geom_bar(data = df_offender, aes(x = gender_1, y = value, fill = variable), stat = "identity") +
+  scale_fill_manual(values = values_gender,
+                    name = "Handelnde Person") +
+  scale_x_discrete(name = "Betroffene Person") +
+  theme(axis.text = element_text(),
+        axis.title.x = element_text())
+
+
+df_offender_summarized = full_data %>%
+  select(Q2.1, fem, male, other) %>%
+  group_by(Q2.1) %>%
+  summarize(across(everything(), ~ sum(.x, na.rm = TRUE))) %>%
+  filter(!is.na(Q2.1)) %>%
+  mutate("weiblich" = rowSums(across(fem)),
+         "männlich" = rowSums(across(male)),
+         "keine Angabe" = rowSums(across(other)),
+         "gender_1" = codes_gender$gender[match(Q2.1, codes_gender$code)]) %>%
+  select("weiblich", "männlich", "keine Angabe") %>%
+  summarize(across(everything(), ~ sum(.x, na.rm = TRUE))) %>%
+  melt() %>% 
+  mutate(fraction = value/sum(value)) %>%
+  mutate(ymax = cumsum(fraction))
+df = df_offender_summarized %>%
+  mutate(ymin = c(0, head(df_offender_summarized$ymax, n = -1)))
+
+(p3 = ggplot(data = df, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=variable)) + theme_void() +
+scale_y_continuous(name = "") +
+scale_x_continuous(limits = c(1.5, 4)) +
+scale_fill_manual(values = values_gender,
+name = "Handelnde Person") +
+coord_polar(theta = "y") +
+geom_rect( color = "grey50", linewidth = .05) +
+theme(text = element_text(size = 15),
+legend.position = "bottom",
+legend.direction = "vertical"))
+
+(p = plot_grid(p3, p2, p1, nrow = 1))
+ggsave("reports/figures/handelne_personen_gender.png", dpi = 700, width = 15) 
 
 #handelnde Person
 codes_person = data.frame(code = c())
@@ -334,8 +407,7 @@ ggsave("reports/figures/handelne_personen.png", dpi = 700, width = 15)
 
 df_faculty_incident = full_data %>%
   select(Q2.2, Q2.1, main_question_q3) %>%
-  filter(!is.na(Q2.2),
-         !is.na(Q2.1)) %>%
+  filter(!is.na(Q2.2)) %>%
   mutate(faculty = codes_faculty$faculty[match(Q2.2, codes_faculty$code)],
          gender = codes_gender$gender[match(Q2.1, codes_gender$code)]) %>%
   filter_at(vars(main_question_q3), any_vars (. == 1)) %>%
@@ -347,9 +419,9 @@ df_faculty_incident = full_data %>%
 p1 = ggplot() + theme_void() + 
   geom_bar(data = df_faculty_incident, aes(x = faculty, y = n, fill = gender), stat = "identity") +
   coord_flip() +
-  scale_fill_manual(values = c("weiblich" = dark_blue, "männlich" = soft_blue, "divers" = teal, "keine Angabe" = "grey50"),
+  scale_fill_manual(values = values_gender,
                     name = "") +
-  scale_y_continuous(name = "Anzahl der Betroffenen") +
+  scale_y_continuous(name = "Anzahl der Vorfälle") +
   theme(axis.text = element_text(hjust = 1),
         axis.title.x = element_text())
 
@@ -381,9 +453,9 @@ df_faculty_all = full_data %>%
 p2 = ggplot() + theme_void() + 
   geom_bar(data = df_faculty_all, aes(x = faculty, y = share, fill = gender), stat = "identity", position = "dodge") +
   coord_flip() +
-  scale_fill_manual(values = c("weiblich" = dark_blue, "männlich" = soft_blue, "divers" = teal, "keine Angabe" = "grey50"),
+  scale_fill_manual(values = values_gender,
                     name = "") +
-  scale_y_continuous(breaks = c(0, 0.25, 0.5), labels = c("0 %", "25 %", "50 %"), name = "Prozent der Befragten") +
+  scale_y_continuous(breaks = c(0, 0.25, 0.5), labels = c("0 %", "25 %", "50 %"), name = "Betroffene in % der Befragten") +
   theme(axis.text = element_text(hjust = 1),
         axis.title.x = element_text())
 
@@ -411,16 +483,157 @@ df_scale = df_scale %>%
          !is.na(gender)) %>%
   mutate(value = as.numeric(value)) %>%
   group_by(variable, gender) %>%
-  summarize(mean = mean(value),
-            sd = sd(value)) %>%
-  filter(gender %in% c("männlich", "weiblich"))
-  
+  summarize(mean = mean(value, na.rm = FALSE),
+            sd = sd(value, na.rm = FALSE)) %>%
+  filter(gender %in% c("männlich", "weiblich"),
+         !is.na(variable),
+         !is.na(mean))
 
 ggplot(data = df_scale, aes(x = variable, y = mean, color = gender)) + theme_void() +
-  geom_pointrange(aes(ymin = -sd, ymax = sd)) +
+  geom_pointrange(aes(ymin = mean-sd, ymax = mean +sd)) +
   coord_flip() +
-  scale_color_manual(values = c("weiblich" = dark_blue, "männlich" = soft_blue, "divers" = teal, "keine Angabe" = "grey50"),
+  scale_color_manual(values = values_gender,
                     name = "") +
+  scale_x_discrete(labels =str_wrap(str_replace_all(long_names, "foo" , " "), width = 70), expand = c(0,0)) + #induce line break
   theme(axis.line.x = element_line(),
         axis.text = element_text())
+ggsave("reports/figures/wieunangenehm.png", dpi = 700, width = 10) 
 
+#faculty comparison
+faculty_benchmark = function(faculty_code, full_data, main_question_q3, codes_faculty, codes_gender) {
+  
+  df_faculty_affected = full_data %>%
+    select(Q2.2, Q2.1, main_question_q3) %>%
+    filter(!is.na(Q2.2),
+           !is.na(Q2.1)) %>%
+    mutate(faculty = codes_faculty$faculty[match(Q2.2, codes_faculty$code)],
+           gender = codes_gender$gender[match(Q2.1, codes_gender$code)],
+           gender = replace(gender, gender %in% c("männlich", "keine Angabe"), "andere")) %>%
+    filter_at(vars(main_question_q3), any_vars (. == 1)) %>%
+    select(-Q2.2, -Q2.1) %>%
+    count(faculty, gender)
+  
+  df_faculty_all = full_data %>%
+    select(Q2.2, Q2.1) %>%
+    filter(!is.na(Q2.2),
+           !is.na(Q2.1)) %>%
+    mutate(faculty = codes_faculty$faculty[match(Q2.2, codes_faculty$code)],
+           gender = codes_gender$gender[match(Q2.1, codes_gender$code)],
+           gender = replace(gender, gender %in% c("männlich", "keine Angabe"), "andere")) %>%
+    count(faculty, gender) %>%
+    rename("Teilnehmende" = n) %>%
+    left_join(df_faculty_affected) %>%
+    rename("Betroffene" = n) %>%
+    filter(faculty != "keine Angabe")
+  
+  
+  df_faculty = df_faculty_all %>%
+    left_join(df_all_students_gender) %>%
+    mutate("Teilnehmende in % Studierende" = 100*Teilnehmende/ Studierende,
+           "Betroffene in % Teilnehmende" = 100*Betroffene/ Teilnehmende,
+           "Betroffene in % Studierende" = 100*Betroffene/ Studierende) 
+  
+  df_faculty_mean = df_faculty %>%
+    group_by(gender) %>%
+    summarize_at(c("Teilnehmende in % Studierende", "Betroffene in % Teilnehmende", "Betroffene in % Studierende"), ~ mean(.x, na.rm = TRUE)) %>%
+    melt(id.vars = "gender", value.name = "mean") 
+  
+  df_faculty_selected = df_faculty %>%
+    filter(faculty == codes_faculty[codes_faculty$code == faculty_code, ]$faculty)  %>%
+    select(gender, c("Teilnehmende in % Studierende", "Betroffene in % Teilnehmende", "Betroffene in % Studierende")) %>%
+    melt(id.vars = "gender", value.name = "selected") %>%
+    left_join(df_faculty_mean) %>%
+    mutate(direction = (case_when(mean < selected ~ "überdurchschnittlich",
+                                  mean > selected ~ "unterdurchschnittlich",
+                                  mean == selected ~ "durchschnittlich")))
+  
+  df_faculty_selected$gender = factor(df_faculty_selected$gender, levels = c("weiblich", "andere"))
+  df_faculty_selected$variable = factor(df_faculty_selected$variable, levels = c("Betroffene in % Studierende", "Betroffene in % Teilnehmende", "Teilnehmende in % Studierende"))
+  
+  ggplot(data = df_faculty_selected) + theme_void() +
+    geom_link(alpha = .5, color = soft_blue, show.legend = FALSE,
+              aes(x = variable, xend = variable, y = mean, yend = selected, colour = gender, size = after_stat(index))) +
+    geom_point(size = 6, 
+               aes(y = selected, x = variable, color = gender, shape = "Fakultät")) +
+    geom_point(size = 2, stroke = 1,
+               aes(y = mean, x = variable, color = gender, shape = "Durchschnitt"), fill = "grey90") +
+    scale_color_manual(values = c(weiblich = dark_blue, andere = teal),
+                       name = "") +
+    scale_shape_manual(breaks=c('Durchschnitt', "Fakultät"),
+                       values=c('Durchschnitt'=21, "Fakultät"=16),
+                       name = "") +
+    scale_x_discrete( expand = c(0.05,0.05)) +
+    scale_y_continuous(name = "Prozent (%)") +
+    coord_flip() +
+    theme(axis.text = element_text(),
+          axis.title.x = element_text(),
+          axis.line.x = element_line(color = "grey50"), 
+          axis.ticks.x = element_line(color = "black")) 
+  
+  ggsave(paste0("reports/figures/benchmark_", codes_faculty[codes_faculty$code == faculty_code, ]$faculty, ".png"), dpi = 700, width = 11, height = 2) 
+}
+
+for (i in c(1:6)) {
+  faculty_benchmark(faculty_code = i, full_data, main_question_q3, codes_faculty, codes_gender)
+}
+
+df_faculty = full_data %>%
+  filter(Q2.2 == faculty_code) %>%
+  mutate(gender = codes_gender$gender[match(Q2.1, codes_gender$code)]) %>%
+  select(all_of(main_question), "gender") %>%
+  filter_all(any_vars(. == 1)) %>%
+  melt(id.vars = c("gender")) %>%
+  filter(value == 1) %>%
+  count(gender, variable)
+
+comparison = full_data %>%
+  mutate(gender = codes_gender$gender[match(Q2.1, codes_gender$code)],
+         faculty = codes_faculty$faculty[match(Q2.2, codes_faculty$code)]) %>%
+  select(all_of(main_question), "gender", "faculty") %>%
+  filter_all(any_vars(. == 1)) %>%
+  melt(id.vars = c("gender", "faculty"), value.name = "all") %>%
+  filter(all == 1) %>%
+  count(gender, variable, faculty) %>%
+  group_by(gender, variable) %>%
+  summarize(mean = round(mean(n, na.rm = TRUE), 0)) %>%
+  left_join(df_faculty) %>%
+  group_by(variable) %>%
+  summarise(mean = sum(mean),
+            n = sum(n, na.rm = TRUE))
+
+p1 = ggplot() + theme_void() +
+  coord_flip() +
+  scale_x_discrete(labels =str_wrap(str_replace_all(long_names, "foo" , " "), width = 70), expand = c(0,0)) + #induce line break
+  scale_y_continuous(expand = c(0,0), limits = c(0, max(max(comparison$mean), max(comparison$n, na.rm = TRUE)) + 2)) +
+  geom_bar(data = df_faculty, stat = "identity",
+           aes(x = variable, y = n, fill = gender)) +
+  geom_point(data = comparison, stat = "identity",
+             aes(x = variable, y = mean), color = "black", fill = "grey90", shape = "|", size = 7) +
+  geom_point(data = comparison, stat = "identity",
+             aes(x = variable, y = mean), color = "black", fill = "grey90", shape = 21, size = 3) +
+  theme(legend.position = "None",
+        axis.text = element_text(color = "grey20"),
+        axis.line = element_line()) +
+  scale_fill_manual(values = values_gender, name = "")
+
+df_all_students_gender = df_all_students %>%
+  rename(weiblich = total_female,
+         andere = total_other) %>%
+  melt(measure.vars = c("weiblich", "andere"), variable.name = "gender", value.name = "Studierende") %>%
+  select(-total)
+
+
+
+
+lines <- data.frame(
+  x = c(5, 12, 15, 9, 6),
+  y = c(17, 20, 4, 15, 5),
+  xend = c(19, 17, 2, 9, 5),
+  yend = c(10, 18, 7, 12, 1),
+  width = c(1, 10, 6, 2, 3),
+  colour = letters[1:5]
+)
+
+ggplot(lines) +
+  geom_link(aes(x = x, y = y, xend = xend, yend = yend, colour = colour,
+                alpha = stat(index), size = after_stat(index)))
