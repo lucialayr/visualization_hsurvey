@@ -576,7 +576,7 @@ faculty_benchmark = function(faculty_code, full_data, main_question_q3, codes_fa
                aes(y = selected, x = variable, color = gender, shape = "Fakultät")) +
     geom_point(size = 2, stroke = 1,
                aes(y = mean, x = variable, color = gender, shape = "Durchschnitt"), fill = "white") +
-    scale_color_manual(values = c(weiblich = dark_blue, andere = teal),
+    scale_color_manual(values = c(weiblich = teal, andere = dark_blue),
                        name = "") +
     scale_shape_manual(breaks=c('Durchschnitt', "Fakultät"),
                        values=c('Durchschnitt'=21, "Fakultät"=16),
