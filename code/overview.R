@@ -287,7 +287,9 @@ p1 = ggplot() + theme_void() +
                     name = "Handelnde Person") +
   scale_y_continuous(breaks = c(0, 0.5, 1), labels = c("0 %", "50 %", "100 %")) +
   scale_x_discrete(name = "Betroffene Person") +
-  theme(axis.text = element_text(), axis.title.x = element_text())
+  theme(axis.text = element_text(), 
+        axis.title.x = element_text(),
+        legend.box.margin = margin(l = -10, r = 20))
 
 p2 = ggplot() + theme_void() +
   geom_bar(data = df_offender, stat = "identity", color = "white",
@@ -296,7 +298,8 @@ p2 = ggplot() + theme_void() +
                     name = "Handelnde Person") +
   scale_x_discrete(name = "Betroffene Person") +
   theme(axis.text = element_text(),
-        axis.title.x = element_text())
+        axis.title.x = element_text(),
+        legend.box.margin = margin(l = -50))
 
 
 df_offender_summarized = full_data %>%
@@ -328,7 +331,7 @@ legend.position = "bottom",
 legend.direction = "vertical"))
 
 (p = plot_grid(p3, p2, p1, nrow = 1))
-ggsave("reports/figures/P4.1.png", dpi = 700, width = 15) 
+ggsave("reports/figures/P4.1.png", dpi = 700, width = 14)
 
 #handelnde Person
 main_question_q3 = c("Q3.1", "Q3.5", "Q3.9", "Q3.13", "Q3.17", "Q3.21", "Q3.25", "Q3.29", 
@@ -368,7 +371,8 @@ p1 = ggplot() + theme_void() +
   scale_y_continuous(breaks = c(0, 0.5, 1), labels = c("0 %", "50 %", "100 %")) +
   scale_x_discrete(name = "Betroffene Person") +
   theme(axis.text = element_text(),
-        axis.title.x = element_text())
+        axis.title.x = element_text(),
+        legend.box.margin = margin(l = -10, r = 20))
 
 p2 = ggplot() + theme_void() +
   geom_bar(data = df_offender, color = "white", stat = "identity",
@@ -377,7 +381,8 @@ p2 = ggplot() + theme_void() +
                     name = "Handelnde Person") +
   scale_x_discrete(name = "Betroffene Person") +
   theme(axis.text = element_text(),
-        axis.title.x = element_text())
+        axis.title.x = element_text(),
+        legend.box.margin = margin(l = -50))
 
 df_offender_summarized = full_data %>%
   select(Q2.1, stud, doz, ang) %>%
@@ -431,7 +436,8 @@ p1 = ggplot() + theme_void() +
                     name = "") +
   scale_y_continuous(name = "Anzahl der Vorfälle") +
   theme(axis.text = element_text(hjust = 1),
-        axis.title.x = element_text())
+        axis.title.x = element_text(),
+        legend.box.margin = margin(l = -10, r = 20))
 
 
 df_faculty_affected = full_data %>%
@@ -455,7 +461,7 @@ df_faculty_all = full_data %>%
   left_join(df_faculty_affected) %>%
   mutate(share = n/n_all) %>%
   filter(gender %in% c("männlich", "weiblich"),
-         faculty != "keine Angabe")
+         faculty != "keine Angabe") 
 
 
 p2 = ggplot() + theme_void() + 
@@ -466,7 +472,8 @@ p2 = ggplot() + theme_void() +
                     name = "") +
   scale_y_continuous(breaks = c(0, 0.25, 0.5), labels = c("0 %", "25 %", "50 %"), name = "Betroffene in % der Befragten") +
   theme(axis.text = element_text(hjust = 1),
-        axis.title.x = element_text())
+        axis.title.x = element_text(),
+        legend.box.margin = margin(l = -10, r = 20))
 
 (p = plot_grid(p1, p2, nrow = 2))
 ggsave("reports/figures/P5.1.png", dpi = 700) 
