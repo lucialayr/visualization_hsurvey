@@ -2,7 +2,7 @@
 1,Bogen,Bogen
 2,Mit welchem Geschlecht identifizieren Sie sich?,Q2.1
 3,An welcher Fakultät studieren Sie?,Q2.2
-4,"? mir Anzüglichkeiten hinterhergerufen wurden (z. B. unangemessene Kommentare zu meinem Aussehen, meinem Geschlecht, etc.)",Q3.1
+4,"… mir Anzüglichkeiten hinterhergerufen wurden (z. B. unangemessene Kommentare zu meinem Aussehen, meinem Geschlecht, etc.)?",Q3.1
 5,Mitstudierende*r,Q3.2A1
 6,Dozierende*r,Q3.2A2
 7,HTWG Angestellte*r,Q3.2A3
@@ -11,7 +11,7 @@
 10,Divers,Q3.3A3
 11,Keine Angabe,Q3.3A4
 12,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q3.4
-13,"? mir auf einem Flur, im Seminarraum, o.ä. Obszönitäten hinterhergerufen wurden.",Q3.5
+13,"… mir auf einem Flur, im Seminarraum, o.ä. Obszönitäten hinterhergerufen wurden?",Q3.5
 14,Mitstudierende*r,Q3.6A1
 15,Dozierende*r,Q3.6A2
 16,HTWG Angestellte*r,Q3.6A3
@@ -20,7 +20,7 @@
 19,Divers,Q3.7A3
 20,Keine Angabe,Q3.7A4
 21,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q3.8
-22,? unangenehme Kommentare mit sexuell aufgeladenem Inhalt in meiner Nähe gemacht wurden.,Q3.9
+22,… unangenehme Kommentare mit sexuell aufgeladenem Inhalt in meiner Nähe gemacht wurden?,Q3.9
 23,Mitstudierende*r,Q3.10A1
 24,Dozierende*r,Q3.10A2
 25,HTWG Angestellte*r,Q3.10A3
@@ -29,7 +29,7 @@
 28,Divers,Q3.11A3
 29,Keine Angabe,Q3.11A4
 30,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q3.12
-31,? ich « mit Blicken ausgezogen» wurde.,Q3.13
+31,… ich « mit Blicken ausgezogen» wurde?,Q3.13
 32,Mitstudierende*r,Q3.14A1
 33,Dozierende*r,Q3.14A2
 34,HTWG Angestellte*r,Q3.14A3
@@ -38,7 +38,7 @@
 37,Divers,Q3.15A3
 38,Keine Angabe,Q3.15A4
 39,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q3.16
-40,? ich Nachrichten mit sexualisierten Inhalten bekommen habe.,Q3.17
+40,… ich Nachrichten mit sexualisierten Inhalten bekommen habe?,Q3.17
 41,Mitstudierende*r,Q3.18A1
 42,Dozierende*r,Q3.18A2
 43,HTWG Angestellte*r,Q3.18A3
@@ -47,7 +47,7 @@
 46,Divers,Q3.19A3
 47,Keine Angabe,Q3.19A4
 48,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q3.20
-49,"? ich das Gefühl hatte, ich müsste an Treffen oder Feiern teilnehmen, die als Vorwand genutzt wurden, um mir näher zu kommen",Q3.21
+49,"... ich das Gefühl hatte, ich müsste an Treffen oder Feiern teilnehmen, die als Vorwand genutzt wurden, um mir näher zu kommen?",Q3.21
 50,Mitstudierende*r,Q3.22A1
 51,Dozierende*r,Q3.22A2
 52,HTWG Angestellte*r,Q3.22A3
@@ -56,7 +56,7 @@
 55,Divers,Q3.23A3
 56,Keine Angabe,Q3.23A4
 57,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q3.24
-58,? ich unangemessen berührt wurde.,Q3.25
+58,... ich unangemessen berührt wurde?,Q3.25
 59,Mitstudierende*r,Q3.26A1
 60,Dozierende*r,Q3.26A2
 61,HTWG Angestellte*r,Q3.26A3
@@ -65,7 +65,7 @@
 64,Divers,Q3.27A3
 65,Keine Angabe,Q3.27A4
 66,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q3.28
-67,? ich gegen meinen Willen festgehalten oder bedrängt wurde.,Q3.29
+67,... ich gegen meinen Willen festgehalten oder bedrängt wurde?,Q3.29
 68,Mitstudierende*r,Q3.30A1
 69,Dozierende*r,Q3.30A2
 70,HTWG Angestellte*r,Q3.30A3
@@ -74,7 +74,7 @@
 73,Divers,Q3.31A3
 74,Keine Angabe,Q3.31A4
 75,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q3.32
-76,? ich gegen meinen Willen fotografiert wurde.,Q3.33
+76,… ich gegen meinen Willen fotografiert wurde?,Q3.33
 77,Mitstudierende*r,Q3.34A1
 78,Dozierende*r,Q3.34A2
 79,HTWG Angestellte*r,Q3.34A3
@@ -83,7 +83,7 @@
 82,Divers,Q3.35A3
 83,Keine Angabe,Q3.35A4
 84,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q3.36
-85,? ich über mein Sexualleben/meine Sexualität ausgefragt wurde oder unangenehme Kommentare in diese Richtung gemacht wurden.,Q3.37
+85,... ich über mein Sexualleben/meine Sexualität ausgefragt wurde oder unangenehme Kommentare in diese Richtung gemacht wurden?,Q3.37
 86,Mitstudierende*r,Q3.38A1
 87,Dozierende*r,Q3.38A2
 88,HTWG Angestellte*r,Q3.38A3
@@ -92,7 +92,7 @@
 91,Divers,Q3.39A3
 92,Keine Angabe,Q3.39A4
 93,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q3.40
-94,? mir jemand auf sozialen Medien unangemessene Inhalte geschrieben/geschickt hat.,Q3.41
+94,... mir jemand auf sozialen Medien unangemessene Inhalte geschrieben/geschickt hat?,Q3.41
 95,Mitstudierende*r,Q3.42A1
 96,Dozierende*r,Q3.42A2
 97,HTWG Angestellte*r,Q3.42A3
@@ -101,7 +101,7 @@
 100,Divers,Q3.43A3
 101,Keine Angabe,Q3.43A4
 102,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q3.44
-103,? mich jemand unterstützt und dafür später eine sexuelle Gegenleistung gefordert hat.,Q3.45
+103,… mich jemand unterstützt und dafür später eine sexuelle Gegenleistung gefordert hat?,Q3.45
 104,Mitstudierende*r,"Q3,46A1"
 105,Dozierende*r,"Q3,46A2"
 106,HTWG Angestellte*r,"Q3,46A3"
@@ -110,7 +110,7 @@
 109,Divers,Q3.47A3
 110,Keine Angabe,Q3.47A4
 111,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q3.48
-112,? ich zu ungewöhnlichen Uhrzeiten und/oder in unangenehme Räumlichkeiten gebeten wurde und ich sexualisierte Handlungen befürchtet habe.,Q3.49
+112,… ich zu ungewöhnlichen Uhrzeiten und/oder in unangenehme Räumlichkeiten gebeten wurde und ich sexualisierte Handlungen befürchtet habe?,Q3.49
 113,Mitstudierende*r,Q3.50A1
 114,Dozierende*r,Q3.50A2
 115,HTWG Angestellte*r,Q3.50A3
@@ -119,7 +119,7 @@
 118,Divers,Q3.51A3
 119,Keine Angabe,Q3.51A4
 120,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q3.52
-121,"? mit mir über sexuelle Inhalte gesprochen wurde, ohne dass ich danach gefragt hätte.",Q3.53
+121,"... mit mir über sexuelle Inhalte gesprochen wurde, ohne dass ich danach gefragt hätte?",Q3.53
 122,Mitstudierende*r,Q3.54A1
 123,Dozierende*r,Q3.54A2
 124,HTWG Angestellte*r,Q3.54A3
@@ -128,7 +128,7 @@
 127,Divers,Q3.55A3
 128,Keine Angabe,Q3.55A4
 129,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q3.56
-130,? mich jemand zu sexuellen Handlungen genötigt und im Gegenzug bessere Noten oder ähnliche Vorteile im Studium versprochen hat.,Q3.57
+130,... mich jemand zu sexuellen Handlungen genötigt und im Gegenzug bessere Noten oder ähnliche Vorteile im Studium versprochen hat?,Q3.57
 131,Mitstudierende*r,Q3.58A1
 132,Dozierende*r,Q3.58A2
 133,HTWG Angestellte*r,Q3.58A3
@@ -137,7 +137,7 @@
 136,Divers,Q3.59A3
 137,Keine Angabe,Q3.59A4
 138,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q3.60
-139,? einer Person unangenehme Kommentare mit sexuell aufgeladenem Inhalt in der Nähe einer Person gemacht wurden.,Q4.1
+139,... einer Person unangenehme Kommentare mit sexuell aufgeladenem Inhalt in der Nähe einer Person gemacht wurden?,Q4.1
 140,Mitstudierende*r,Q4.2A1
 141,Dozierende*r,Q4.2A2
 142,HTWG Angestellte*r,Q4.2A3
@@ -153,7 +153,7 @@
 152,Divers,Q4.5A3
 153,Keine Angabe,Q4.5A4
 154,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q4.6
-155,"? einer Person auf einem Flur, im Seminarraum, o.ä. Obszönitäten hinterhergerufen wurden.",Q4.7
+155,"... einer Person auf einem Flur, im Seminarraum, o.ä. Obszönitäten hinterhergerufen wurden?",Q4.7
 156,Mitstudierende*r,Q4.8A1
 157,Dozierende*r,Q4.8A2
 158,HTWG Angestellte*r,Q4.8A3
@@ -169,7 +169,7 @@
 168,Divers,Q4.11A3
 169,Keine Angabe,Q4.11A4
 170,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q4.12
-171,? eine Person « mit Blicken ausgezogen « wurde.,Q4.13
+171,... eine Person « mit Blicken ausgezogen « wurde?,Q4.13
 172,Mitstudierende*r,Q4.14A1
 173,Dozierende*r,Q4.14A2
 174,HTWG Angestellte*r,Q4.14A3
@@ -185,7 +185,7 @@
 184,Divers,Q4.17A3
 185,Keine Angabe,Q4.17A4
 186,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q4.18
-187,? eine Person Nachrichten mit sexualisierten Inhalten bekommen hat.,Q4.19
+187,... eine Person Nachrichten mit sexualisierten Inhalten bekommen hat?,Q4.19
 188,Mitstudierende*r,Q4.20A1
 189,Dozierende*r,Q4.20A2
 190,HTWG Angestellte*r,Q4.20A3
@@ -201,7 +201,7 @@
 200,Divers,Q4.23A3
 201,Keine Angabe,Q4.23A4
 202,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q4.24
-203,"? eine Person das Gefühl hatte, sie müsste an Treffen oder Feiern teilnehmen, die als Vorwand genutzt wurden, um ihr näher zu kommen.",Q4.25
+203,"... eine Person das Gefühl hatte, sie müsste an Treffen oder Feiern teilnehmen, die als Vorwand genutzt wurden, um ihr näher zu kommen?",Q4.25
 204,Mitstudierende*r,Q4.26A1
 205,Dozierende*r,Q4.26A2
 206,HTWG Angestellte*r,Q4.26A3
@@ -217,7 +217,7 @@
 216,Divers,Q4.29A3
 217,Keine Angabe,Q4.29A4
 218,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q4.30
-219,? eine Person unangemessen berührt wurde.,Q4.31
+219,... eine Person unangemessen berührt wurde?,Q4.31
 220,Mitstudierende*r,Q4.32A1
 221,Dozierende*r,Q4.32A2
 222,HTWG Angestellte*r,Q4.32A3
@@ -233,7 +233,7 @@
 232,Divers,Q4.35A3
 233,Keine Angabe,Q4.35A4
 234,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q4.36
-235,? eine Person gegen ihren Willen festgehalten oder bedrängt wurde.,Q4.37
+235,... eine Person gegen ihren Willen festgehalten oder bedrängt wurde?,Q4.37
 236,Mitstudierende*r,Q4.38A1
 237,Dozierende*r,Q4.38A2
 238,HTWG Angestellte*r,Q4.38A3
@@ -249,7 +249,7 @@
 248,Divers,Q4.41A3
 249,Keine Angabe,Q4.41A4
 250,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q4.42
-251,? eine Person gegen ihren Willen fotografiert wurde.,Q4.43
+251,... eine Person gegen ihren Willen fotografiert wurde?,Q4.43
 252,Mitstudierende*r,Q4.44A1
 253,Dozierende*r,Q4.44A2
 254,HTWG Angestellte*r,Q4.44A3
@@ -265,7 +265,7 @@
 264,Divers,Q4.47A3
 265,Keine Angabe,Q4.47A4
 266,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q4.48
-267,? eine Person über ihr Sexualleben/ihre Sexualität ausgefragt wurde oder unangenehme Kommentare in diese Richtung gemacht wurden.,Q4.49
+267,... eine Person über ihr Sexualleben/ihre Sexualität ausgefragt wurde oder unangenehme Kommentare in diese Richtung gemacht wurden?,Q4.49
 268,Mitstudierende*r,Q4.50A1
 269,Dozierende*r,Q4.50A2
 270,HTWG Angestellte*r,Q4.50A3
@@ -281,7 +281,7 @@
 280,Divers,Q4.53A3
 281,Keine Angabe,Q4.53A4
 282,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q4.54
-283,? einer Person auf sozialen Medien unangemessene Inhalte geschrieben/geschickt wurden.,Q4.55
+283,... einer Person auf sozialen Medien unangemessene Inhalte geschrieben/geschickt wurden?,Q4.55
 284,Mitstudierende*r,Q4.56A1
 285,Dozierende*r,Q4.56A2
 286,HTWG Angestellte*r,Q4.56A3
@@ -297,7 +297,7 @@
 296,Divers,Q4.59A3
 297,Keine Angabe,Q4.59A4
 298,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q4.60
-299,? eine Person unterstützt und dafür später eine sexuelle Gegenleistung gefordert wurde.,Q4.61
+299,... eine Person unterstützt und dafür später eine sexuelle Gegenleistung gefordert wurde?,Q4.61
 300,Mitstudierende*r,Q4.62A1
 301,Dozierende*r,Q4.62A2
 302,HTWG Angestellte*r,Q4.62A3
@@ -313,7 +313,7 @@
 312,Divers,Q4.65A3
 313,Keine Angabe,Q4.65A4
 314,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q4.66
-315,? eine Person zu ungewöhnlichen Uhrzeiten und/oder in unangenehme Räumlichkeiten gebeten wurde und sie sexualisierte Handlungen befürchtet hat.,Q4.67
+315,... eine Person zu ungewöhnlichen Uhrzeiten und/oder in unangenehme Räumlichkeiten gebeten wurde und sie sexualisierte Handlungen befürchtet hat?,Q4.67
 316,Mitstudierende*r,Q4.68A1
 317,Dozierende*r,Q4.68A2
 318,HTWG Angestellte*r,Q4.68A3
@@ -329,7 +329,7 @@
 328,Divers,Q4.71A3
 329,Keine Angabe,Q4.71A4
 330,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q4.72
-331,"? mit einer Person über sexuelle Inhalte gesprochen wurde, ohne dass sie danach gefragt hätte.",Q4.73
+331,"... mit einer Person über sexuelle Inhalte gesprochen wurde, ohne dass sie danach gefragt hätte?",Q4.73
 332,Mitstudierende*r,Q4.74A1
 333,Dozierende*r,Q4.74A2
 334,HTWG Angestellte*r,Q4.74A3
@@ -345,7 +345,7 @@
 344,Divers,Q4.77A3
 345,Keine Angabe,Q4.77A4
 346,"Skala (1: Nicht unangenehm, 5: Sehr unangenehm)",Q4.78
-347,? eine Person zu sexuellen Handlungen genötigt wurde und im Gegenzug bessere Noten oder ähnliche Vorteile im Studium versprochen wurden.,Q4.79
+347,... eine Person zu sexuellen Handlungen genötigt wurde und im Gegenzug bessere Noten oder ähnliche Vorteile im Studium versprochen wurden?,Q4.79
 348,Mitstudierende*r,Q4.80A1
 349,Dozierende*r,Q4.80A2
 350,HTWG Angestellte*r,Q4.80A3
