@@ -2,7 +2,7 @@
 
 This folder contains the final code for the visualization of a sexual harassment survey, conducted by a German university and analysed by me as a freelance data scientist in Fall 2023.
 
-Note: This analysis is based on sensitive information, therefore the public version of the repository does not contain any data. Below you will nevertheless find instruction on the steps that would be necessary to repeat the analysis. 
+Note: This analysis is based on sensitive information, therefore the public version of the repository does not contain any data. Below you will find instruction on the steps that would be necessary to repeat the analysis. 
 
 ## Examples
 
