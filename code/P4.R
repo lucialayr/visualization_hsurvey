@@ -1,5 +1,3 @@
-setwd("~/03_Outreach/dataviz/konstanz")
-
 source("code/utils.R")
 
 #this creates a series of plots that show properties of active persons
@@ -23,11 +21,11 @@ df$variable = factor(df$variable, levels = c("männlich", "weiblich","keine Anga
 df$gender_1 = factor(df$gender_1, levels = c("männlich", "weiblich", "keine Angabe"))
 
 (p1 = ggplot() + theme_void() +
-    add_common_layout() +
+    add_common_layout(20) +
     geom_bar(data = df[df$gender_1 %in% c("weiblich", "männlich"),], stat = "identity", color = "white",
            aes(x = gender_1, y = value, fill = variable)) +
-   geom_text(data = df[df$gender_1 %in% c("weiblich", "männlich") & df$variable %in% c("weiblich", "männlich"),], 
-              position = position_fill(vjust = 0.75), color = "white", size = 4,
+   geom_text(data = df[df$gender_1 %in% c("weiblich", "männlich") & df$variable %in% c("weiblich", "männlich"),], family = "swiss", 
+              position = position_fill(vjust = 0.8), color = "white", size = 5,
               aes(x = gender_1, y = value, group = variable, label = paste0(round(value*100), " %\n(", value*Gesamt, ")"))) +
     scale_fill_manual(values = values_gender,
                     name = "Handelnde Person") +
@@ -61,26 +59,29 @@ df = full_data %>%
   summarize(across(everything(), ~ sum(.x, na.rm = TRUE))) %>%
   melt() %>% 
   mutate(fraction = value/sum(value)) %>%
-  mutate(ymax = cumsum(fraction)) %>%
-  mutate(ymin = c(0, head(df_summarized$ymax, n = -1)),
-         text = paste0(round(fraction*100), " % \n(", value, ")"))
+  mutate(ymax = cumsum(fraction)) 
 
-(p3 = ggplot(data = df, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=variable)) + 
+df = df %>%  #this needs to be done in a separate pipe for some reason
+  mutate(ymin = c(0, head(df$ymax, n = -1)),
+         text = paste0(round(fraction*100), " % \n(", value, ")")) #this may need to be run twice to get limits
+
+(p2 = ggplot(data = df, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=variable)) + 
     theme_void() +
-    add_common_layout() +
+    add_common_layout(20) +
     coord_polar(theta = "y") +
     geom_rect(color = "white") +
-    geom_text(aes(x = 3.5, y = (ymin + ymax)/2-.05, label = text), color = "white", size = 4) +
+    geom_text(aes(x = 3.5, y = (ymin + ymax)/2-.05, label = text), family = "swiss", #this may need to be run twice to get limits
+              color = "white", size = 5) +
+    geom_segment(aes(x =3.4, xend = 3.35, y = 0.985, yend = 0.95), color = "white", size = .25) +
     scale_y_continuous(name = "") +
     scale_x_continuous(name = "", limits = c(1.5, 4)) +
     scale_fill_manual(values = values_gender,
                       name = "Handelnde Person") +
-    theme(text = element_text(size = 15),
-          legend.position = "bottom",
+    theme(legend.position = "bottom",
           legend.direction = "vertical"))
 
-(p = plot_grid(p3, p1, nrow = 1))
-ggsave("reports/figures/P4.1.png", dpi = 700, width = 12, height = 8)
+(p = plot_grid(p2, p1, nrow = 1))
+ggsave("reports/figures/P4.1.pdf", dpi = 300, width = 12, height = 8)
 
 #Rolle der handelnden Person
 
@@ -103,11 +104,11 @@ df$gender = factor(df$gender, levels = codes_gender$gender)
 
 (p1 = ggplot() + 
     theme_void() +
-    add_common_layout() +
+    add_common_layout(20) +
     geom_bar(data = df[df$gender %in% c("weiblich", "männlich"),], stat = "identity", color = "white",
              aes(x = gender, y = value, fill = variable)) +
     geom_text(data = df[df$gender %in% c("weiblich", "männlich") & df$value > 0.05,], 
-              position = position_fill(vjust = 0.5), color = "white", size = 4,
+              position = position_fill(vjust = 0.5), color = "white", size = 5, family = "swiss", 
               aes(x = gender, y = value, group = variable, label = paste0(round(value*100), " %\n(", value*Gesamt, ")"))) +
     scale_fill_manual(values = c("Mitstudierende*r" = dark_blue, "HTWG Angestellte*r" = soft_blue, "Dozierende*r" = teal),
                       name = "Handelnde Person") +
@@ -139,24 +140,25 @@ df = full_data %>%
   summarize(across(everything(), ~ sum(.x, na.rm = TRUE))) %>%
   melt() %>% 
   mutate(fraction = value/sum(value)) %>%
-  mutate(ymax = cumsum(fraction)) %>%
+  mutate(ymax = cumsum(fraction)) 
+
+df = df %>%
   mutate(ymin = c(0, head(df$ymax, n = -1)),
          text = paste0(round(fraction*100), " % \n(", value, ")"))
 
-(p3 = ggplot(data = df, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=variable)) + 
+(p2 = ggplot(data = df, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=variable)) + 
     theme_void() +
-    add_common_layout() +
+    add_common_layout(20) +
     coord_polar(theta = "y") +
     geom_rect(color = "white") +
-    geom_text(aes(x = 3.5, y = (ymin + ymax)/2, label = text), color = "white", size = 4) +
+    geom_text(aes(x = 3.5, y = (ymin + ymax)/2, label = text), color = "white", size = 5, family = "swiss") +
     scale_y_continuous(name = "") +
     scale_x_continuous(limits = c(1.5, 4)) +
     scale_fill_manual(values = c("Mitstudierende*r" = dark_blue, "HTWG Angestellte*r" = soft_blue, "Dozierende*r" = teal),
                       name = "Handelnde Person") +
-    theme(text = element_text(size = 15),
-          legend.position = "bottom",
+    theme(legend.position = "bottom",
           legend.direction = "vertical"))
 
-(p = plot_grid(p3, p1, nrow = 1))
-ggsave("reports/figures/P4.2.png", dpi = 700, width = 12, height = 8) 
+(p = plot_grid(p2, p1, nrow = 1))
+ggsave("reports/figures/P4.2.pdf", dpi = 300, width = 12, height = 8) 
 

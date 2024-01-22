@@ -3,12 +3,17 @@ library(reshape2)
 library(waffle)
 library(cowplot)
 library(ggforce)
+library(showtext)
+
 
 full_data = read.csv("data/processed/data_renamed.csv") %>%
   select(-X) %>%
-  mutate(Q2.1 = replace(Q2.1, Q2.1 == 3, 1),
+  mutate(Q2.1 = replace(Q2.1, Q2.1 == 3, 4),
          Q2.1 = replace(Q2.1, is.na(Q2.1), 4))
 
+full_data_all_genders = read.csv("data/processed/data_renamed.csv") %>%
+  select(-X) %>%
+  mutate(Q2.1 = replace(Q2.1, is.na(Q2.1), 4))
 
 #colors
 dark_blue = "#334152"
@@ -16,7 +21,10 @@ dark_blue = "#334152"
     teal = "#009b91"
       
     
-values_gender = c("weiblich" = teal, "männlich" = dark_blue,  "keine Angabe" = soft_blue)
+values_gender = c("männlich" = dark_blue, "weiblich" = teal,  "keine Angabe" = soft_blue)
+names_gender = c("männlich", "weiblich","keine Angabe/divers")
+
+values_gender_all = c("weiblich" = teal, "männlich" = dark_blue,  "keine Angabe" = soft_blue, divers = "grey95")
 
 #lookup names
 lookup_names = read.csv("data/processed/names_sauber.csv", header = TRUE) %>%
@@ -25,6 +33,9 @@ lookup_names = read.csv("data/processed/names_sauber.csv", header = TRUE) %>%
 
 codes_gender = data.frame(code = c(2, 1, 4),
                           gender = c("männlich", "weiblich",  "keine Angabe"))
+
+codes_all_gender = data.frame(code = c(2, 3, 1, 4),
+                          gender = c("männlich", "divers", "weiblich",   "keine Angabe"))
 
 codes_faculty = data.frame(code = c(1, 2, 3, 4, 5, 6, 7),
                            faculty = c("Architektur und Gestaltung", "Bauingenieurwesen", "Elektrotechnik und Informationstechnik", 
@@ -52,7 +63,33 @@ ang = c("Q3.2A3", "Q3.6A3", "Q3.10A3", "Q3.14A3", "Q3.18A3", "Q3.22A3",
 
 scale_q3 = c("Q3.4", "Q3.8", "Q3.12", "Q3.16", "Q3.20", "Q3.24", "Q3.28", "Q3.32", 
              "Q3.36", "Q3.40", "Q3.44", "Q3.48", "Q3.52", "Q3.56", "Q3.60")
+
+
+#takes from report
+df_all_students = data.frame(faculty = c("Architektur und Gestaltung", "Bauingenieurwesen", 
+                                         "Elektrotechnik und Informationstechnik", "Informatik", "Maschinenbau", 
+                                         "Wirtschafts-, Kultur- und Rechtswissenschaften"),
+                             total_female = c(187 + 117 + 58 + 25, 63 + 28 + 47 + 63,
+                                              2 + 1 + 17 + 18 + 13 + 7 + 19, 38 + 57 + 56 + 16 + 17, 
+                                              32 + 2 + 25 + 17 + 10 + 15 + 1 + 4 + 12, 
+                                              154 + 167 + 64 + 36 + 28 + 14 + 32 + 22 + 28 + 29 + 29),
+                             first_semester = c(38 + 21 + 17,
+                                                22 + 17 +8,
+                                                19 + 9 + 12 + 7 + 19,
+                                                26 + 35 + 15 + 5,
+                                                21 + 20 + 13 + 14 + 11 + 8,
+                                               42 + 49 + 10 + 7 + 10 + 1),
+                             total = c(301 + 155 + 92 + 31, 237 + 112 + 127 + 63,
+                                       38 + 15 + 211 + 154 + 51 + 64 + 63, 271 + 263 + 109 + 90 + 45,
+                                       16 + 276 + 29 + 252 + 63 + 5 + 52 + 99 + 29 + 51 + 57,
+                                       315 + 260 + 112 + 46 + 57 + 31 + 39 + 27 + 60 + 1 + 39 + 44)) %>%
+  mutate(total_other = total - total_female,
+         total_wo_1 = total - first_semester)
+
+
 #plot settings
+font_add("swiss", "code/fonts/Swiss/TTF/tt0001m_.ttf")
+showtext_auto()   
 
 add_common_layout = function(fontsize = 15) {
   theme_void() %+replace%
@@ -64,10 +101,11 @@ add_common_layout = function(fontsize = 15) {
           plot.margin = margin(0, 0, 0, 0, "cm"),
           plot.background = element_rect(fill = "transparent", colour = NA),
           strip.background = element_rect(fill = "transparent", color = NA),
-          strip.text = element_text(size = fontsize),
-          text = element_text(size = fontsize))
+          strip.text = element_text(size = fontsize, family = "swiss"),
+          text = element_text(size = fontsize, family = "swiss"))
   
 }
-    
+
+ 
     
     

@@ -1,5 +1,3 @@
-setwd("~/03_Outreach/dataviz/konstanz")
-
 source("code/utils.R")
 
 #This script creates a plot that shows how uncomfortable situation
@@ -31,9 +29,14 @@ ggplot(data = df, aes(x = variable, y = mean, color = gender)) +
   geom_pointrange(aes(ymin = mean-sd, ymax = mean +sd), size = 1) +
   scale_color_manual(values = values_gender,
                      name = "") +
-  scale_y_continuous(name = "Wie unangenehm wurde Erlebnis empfunden?") +
+  scale_y_continuous(name = "Als wie unangenehm wurde das Erlebnis empfunden?") +
   scale_x_discrete(expand = c(0.05,0.05), name = "",
-                   labels =str_wrap(str_replace_all(long_names, "foo" , " "), width = 70)) + #induce line break
+                   labels =str_wrap(str_replace_all(long_names3, "foo" , " "), width = 70)) + #induce line break
   theme(axis.line.x = element_line(),
         axis.text = element_text())
-ggsave("reports/figures/P6.png", dpi = 700, width = 12, height = 9) 
+
+ggsave("reports/figures/P6.pdf", dpi = 300, width = 12, height = 9) 
+
+df %>%
+  rename("Geschlecht" = gender, "Durchschnitt" = mean, "Frage" = variable) %>%
+  write_delim("data/final/P6.csv", delim = ",")

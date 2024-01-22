@@ -1,5 +1,3 @@
-setwd("~/03_Outreach/dataviz/konstanz")
-
 source("code/utils.R")
 
 #This script creates a plot that gives an overview of incidents per faculty
@@ -12,8 +10,8 @@ df = full_data %>%
          gender = codes_gender$gender[match(Q2.1, codes_gender$code)]) %>%
   filter_at(vars(main_question3), any_vars (. == 1)) %>%
   select(-Q2.2, -Q2.1) %>%
-  melt(id.vars = c("gender", "faculty")) %>%
-  filter(value == 1) %>%
+  #melt(id.vars = c("gender", "faculty")) %>%
+  #filter(value == 1) %>%
   count(faculty, gender) 
 
 (p1 = ggplot() + 
@@ -22,12 +20,12 @@ df = full_data %>%
     coord_flip() +
     geom_bar(data = df[df$faculty != "keine Angabe", ], stat = "identity", color = "white",
            aes(x = faculty, y = n, fill = gender)) +
-    geom_text(data = df[df$n > 4, ], position = position_stack(vjust = 0.5), color = "white", size = 4,
+    geom_text(data = df[df$n > 4, ], position = position_stack(vjust = 0.5), color = "white", size = 4, family = "swiss", 
               aes(x = faculty, y = n,  label = n, group = gender)) +
     scale_fill_manual(values = values_gender,
                     name = "") +
     scale_x_discrete(name = "") +
-    scale_y_continuous(name = "Anzahl der Vorfälle") +
+    scale_y_continuous(name = "Anzahl betroffene Studierende") +
     theme(axis.text = element_text(hjust = 1),
         axis.title.x = element_text(),
         legend.position = "bottom",
@@ -64,7 +62,7 @@ df = full_data %>%
     add_common_layout(12) +
     geom_bar(data = df, stat = "identity", position = "dodge", color = "white",
            aes(x = faculty, y = share, fill = gender)) +
-    geom_text(data = df, position = position_dodge(width = .9), color = "grey20", size = 4,
+    geom_text(data = df, position = position_dodge(width = .9), color = "grey20", size = 4, family = "swiss", 
               aes(x = faculty, y = share + .025,  label = paste(round(share*100), "%"), group = gender)) +
     coord_flip() +
     scale_fill_manual(values = values_gender,
@@ -79,4 +77,4 @@ legend = get_legend(p1)
 
 (p = plot_grid(p1 + theme(legend.position = "None"), p2, legend,  nrow = 3, rel_heights = c(1, 1, .25)))
 
-ggsave("reports/figures/P5.1.png", dpi = 700, width = 11)
+ggsave("reports/figures/P5.1.pdf", dpi = 300, width = 11, height = 6.5)

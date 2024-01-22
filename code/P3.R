@@ -1,5 +1,3 @@
-setwd("~/03_Outreach/dataviz/konstanz")
-
 source("code/utils.R")
 
 #This creates a plot series P3.X which show the ansers to the question blocks
@@ -15,7 +13,7 @@ df1 = full_data %>%
   select(all_of(main_question3), "Q2.1") %>%
   mutate(gender = codes_gender$gender[match(Q2.1, codes_gender$code)]) %>%
   select(-Q2.1) %>%
-  filter_all(any_vars(. == 1)) %>%
+  filter_at(vars(main_question3), any_vars (. == 1)) %>%
   melt(id.vars = c("gender")) %>%
   filter(!is.na(value),
          !is.na(variable),
@@ -38,15 +36,17 @@ ggplot() + theme_void() +
         axis.text = element_text(color = "grey20"),
         axis.line = element_line()) +
   scale_x_discrete(expand = c(0,0), name = "", 
-                   labels =str_wrap(str_replace_all(long_names, "foo" , " "), width = 50)) + #induce line break
-  scale_y_continuous(expand = c(0,0), limits = c(0, 160), name = "Anzahl Studierende",
+                   labels =str_wrap(str_replace_all(long_names3, "foo" , " "), width = 50)) + #induce line break
+  scale_y_continuous(expand = c(0,0), limits = c(0, 160), name = "Anzahl betroffene Studierende pro Frage",
                      breaks = c(50, 100, 150)) +
-  scale_fill_manual(values = values_gender, name = "")
+  scale_fill_manual(values = values_gender, name = "") +
+  theme(legend.position = "bottom",
+        legend.direction = "horizontal")
 
-ggsave("reports/figures/P3.1.png", dpi = 700, width = 16, height = 11)
+ggsave("reports/figures/P3.1.pdf", dpi = 300, width = 16, height = 11)
 
 df1 %>%
-  rename("Geschlecht" = gender, "Frage" = variable, "Studierende" = n)  %>%
+  rename("Geschlecht" = gender, "Frage" = variable, "Vorfälle" = n)  %>%
   write_delim("data/final/P3.1.csv", delim = ",")
 
 
@@ -56,7 +56,7 @@ df2 = full_data %>%
   select(all_of(main_question4), "Q2.1") %>%
   mutate(gender = codes_gender$gender[match(Q2.1, codes_gender$code)]) %>%
   select(-Q2.1) %>%
-  filter_all(any_vars(. == 1)) %>%
+  filter_at(vars(main_question4), any_vars (. == 1)) %>%
   melt(id.vars = c("gender")) %>%
   filter(!is.na(value),
          !is.na(variable),
@@ -74,21 +74,23 @@ ggplot() + theme_void() +
   coord_flip() +
   geom_bar(data = df2, stat = "identity", color = "white",
            aes(x = variable, y = n, fill = gender)) +
-  geom_text(data = df_labels, color = "grey20", size = 5,
+  geom_text(data = df_labels, color = "grey20", size = 5, family = "swiss", 
             aes(x = variable, y = n+5,  label = n)) +
   theme(legend.position = "None",
         axis.text = element_text(color = "grey20"),
         axis.line = element_line()) +
   scale_x_discrete(expand = c(0,0), name = "", 
-                   labels =str_wrap(str_replace_all(long_names, "foo" , " "), width = 50)) + #induce line break
-  scale_y_continuous(expand = c(0,0), limits = c(0, 160), name = "Anzahl Studierende",
+                   labels =str_wrap(str_replace_all(long_names4, "foo" , " "), width = 50)) + #induce line break
+  scale_y_continuous(expand = c(0,0), limits = c(0, 170), name = "Anzahl betroffene Studierende pro Frage",
                      breaks = c(50, 100, 150)) +
-  scale_fill_manual(values = values_gender, name = "")
+  scale_fill_manual(values = values_gender, name = "") +
+  theme(legend.position = "bottom",
+        legend.direction = "horizontal")
 
-ggsave("reports/figures/P3.2.png", dpi = 700, width = 16, height = 11)
+ggsave("reports/figures/P3.2.pdf", dpi = 300, width = 16, height = 11)
 
 df2 %>%
-  rename("Geschlecht" = gender, "Frage" = variable, "Studierende" = n)  %>%
+  rename("Geschlecht" = gender, "Frage" = variable, "Vorfälle" = n)  %>%
   write_delim("data/final/P3.2.csv", delim = ",")
 #P3.3
 
@@ -105,7 +107,7 @@ df = df1 %>%
          name = q3q4_paare$gesehen[match(variable_Q3, q3q4_paare$Q3)]) %>%
   left_join(df2_join) %>%
   mutate(Q3_n = -Q3_n) %>%
-  filter(!is.na(Q4_n))
+  filter(!is.na(variable_Q4))
 
 df_labels = df %>%
   group_by(name) %>%
@@ -124,12 +126,12 @@ df_labels = df %>%
              aes(y = Q3_n, fill = gender)) +
     geom_bar(color = "white", stat = "identity", width = 0.6,
              aes(y = Q4_n, fill = gender)) +
-    geom_text(aes(y = 0, label =name, x = factor(name)), size = 5,
+    geom_text(aes(y = 0, label =name, x = factor(name)), size = 5, family = "swiss", 
               hjust = .5, nudge_x = -0.45, check_overlap = TRUE) +
-    geom_text(data = df_labels, color = "grey20", size = 4,
+    geom_text(data = df_labels, color = "grey20", size = 4, family = "swiss", 
               aes(x = name, y = value + 5 * sign(value),  label = text)) +
     scale_x_discrete(name = "") +
-    scale_y_continuous(expand = c(0,0), name = "",
+    scale_y_continuous(expand = c(0,0), name = "Anzahl betroffene Studierende pro Frage (erlebt/beobachtet)",
                        limits = c(-155, 170), 
                        breaks = c(-150, -100, -50, 0, 50, 100, 150),
                        labels = c(150, 100, -50, 0, 50, 100, 150)) +
@@ -137,11 +139,12 @@ df_labels = df %>%
                       name = "") +
     theme(axis.text.x = element_text(color = "grey20"),
           axis.line.x = element_line(color = "grey20"),
-          legend.position = "None") +
+          legend.position = "bottom",
+          legend.direction = "horizontal") + 
     guides(fill = guide_legend(reverse=T)))
 
 
-ggsave("reports/figures/P3.3.png", dpi = 700,  width = 15, height = 10)
+ggsave("reports/figures/P3.3.pdf", dpi = 300,  width = 15, height = 10)
 
 
 #P3.4
@@ -168,7 +171,7 @@ ggplot() + theme_void() +
   theme(axis.text = element_text(),
         axis.text.y = element_text(angle = 90))
 
-ggsave("reports/figures/P3.4.png", dpi = 700)
+ggsave("reports/figures/P3.4.pdf", dpi = 300, width = 7, height = 6)
 
 df %>% 
   mutate(Kategorie = case_when(q3 == q4 & q3 == 1 ~ "betroffen, beobachtet",
