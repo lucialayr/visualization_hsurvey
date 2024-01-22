@@ -8,7 +8,7 @@ Note: This analysis is based on sensitive information, therefore the public vers
 
 
 <div style="display: flex; justify-content: space-between;">
-  <img src="reports/figures/selection/P1.1.png" alt="Figure 2" width="40%">
+  <img src="reports/figures/selection/P1.1.png" alt="Figure 2" width="35%">
   <img src="reports/figures/selection/P3.4.png" alt="Figure 1" width="45%">
 </div>
 
