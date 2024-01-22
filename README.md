@@ -13,7 +13,7 @@ Note: This analysis is based on sensitive information, therefore the public vers
 </div>
 
 
-<img src="reports/figures/selection/P5.2C_Wirtschafts-, Kultur- und Rechtswissenschaften.png" alt="Figure 1" width="85%" style="margin-top: 5%;">
+<img src="reports/figures/selection/P5.2C_Wirtschafts-, Kultur- und Rechtswissenschaften.png" alt="Figure 1" width="85%" style="margin-top: 10%;">
 
 ## Folder structure
 
